@@ -79,11 +79,20 @@ const images = [
   img.src = image.preview;
   img.alt = image.description;
   img.dataset.source = image.original;
-
-  link.addEventListener('click', (evt) => {
-    evt.preventDefault();
-  });
+  
   link.appendChild(img);
   galleryItem.appendChild(link);
   galleryContainer.appendChild(galleryItem);
- })
+});
+
+galleryContainer.addEventListener('click', (evt) => {
+  evt.preventDefault();
+
+  if(evt.target === evt.currentTarget){
+    return;
+  }
+  const largeImageSource = evt.target.dataset.source;
+  const instance = basicLightbox.create(`<img src="${largeImageSource}" width="800" height="600">`)
+
+  instance.show();
+})
